@@ -26,13 +26,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="flex">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="flex p-5 min-h-screen">
         <Sidebar />
-        <div className="ml-64 flex-1">
+        <div className="ml-64 flex-1 flex flex-col">
           <Header />
           <Breadcrumb />
-          <main className="p-4">{children}</main>
+          <main className="p-4 flex-1 mb-5">{children}</main>
         </div>
       </body>
     </html>
