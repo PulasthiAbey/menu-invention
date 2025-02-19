@@ -8,7 +8,7 @@ import { useState } from "react";
 const navItems = [
   {
     name: "Systems",
-    href: "/dashboard",
+    href: "/systems",
     icon: <Folder sx={{ fontSize: 20 }} />,
     children: [
       {
