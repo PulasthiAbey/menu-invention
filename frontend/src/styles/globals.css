@@ -5,9 +5,10 @@
 :root {
   --foreground: #0a0a0a;
   --background: #ffffff;
-  --blue-gray-900: #101828;
+  --blue-gray-300: #d0d5dd;
   --blue-gray-500: #667085;
   --blue-gray-800: #1d2939;
+  --blue-gray-900: #101828;
   --lime-green-200: #c8fc9b;
   --lime-green-400: #9ff443;
 }
@@ -16,6 +17,7 @@
   :root {
     --foreground: #0a0a0a;
     --background: #ffffff;
+    --blue-gray-300: #d0d5dd;
     --blue-gray-500: #667085;
     --blue-gray-800: #1d2939;
     --blue-gray-900: #101828;
