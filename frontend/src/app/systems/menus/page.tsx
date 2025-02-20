@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { Widgets, ExpandMore } from "@mui/icons-material";
 import {
@@ -8,8 +9,9 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-import TreeMenu from "@/components/ui/TreeMenu";
+import { TreeMenu } from "@/components/ui";
 import { ExpandedState, TreeNode } from "@/types";
+import { MenuForm } from "@/components/layout";
 
 const sampleMenu = [
   {
@@ -49,7 +51,7 @@ export default function Menus() {
   const [expanded, setExpanded] = useState<ExpandedState>({});
 
   const expandAllNodes = (nodes: TreeNode[]): { [key: string]: boolean } => {
-    let newExpanded: { [key: string]: boolean } = {};
+    const newExpanded: { [key: string]: boolean } = {};
 
     const traverse = (items: TreeNode[]) => {
       items.forEach((item) => {
@@ -99,6 +101,7 @@ export default function Menus() {
       </FormControl>
 
       <div className="grid grid-cols-2 gap-6">
+        {/* Left Column: Button Controls and Tree View */}
         <div>
           <div className="flex space-x-4 px-4">
             <Button
@@ -124,6 +127,11 @@ export default function Menus() {
               setExpanded={setExpanded}
             />
           </div>
+        </div>
+
+        {/* Right Column: Menu Form */}
+        <div>
+          <MenuForm />
         </div>
       </div>
     </div>
