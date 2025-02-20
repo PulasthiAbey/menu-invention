@@ -5,6 +5,7 @@
 :root {
   --foreground: #0a0a0a;
   --background: #ffffff;
+  --blue-prime-600: #253bff;
   --blue-gray-300: #d0d5dd;
   --blue-gray-500: #667085;
   --blue-gray-800: #1d2939;
@@ -17,6 +18,7 @@
   :root {
     --foreground: #0a0a0a;
     --background: #ffffff;
+    --blue-prime-600: #253bff;
     --blue-gray-300: #d0d5dd;
     --blue-gray-500: #667085;
     --blue-gray-800: #1d2939;

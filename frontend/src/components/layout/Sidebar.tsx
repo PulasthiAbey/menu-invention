@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { MenuOpen, Menu, Folder, GridView } from "@mui/icons-material";
+import { MenuOpen, Menu, Folder, GridView, Widgets } from "@mui/icons-material";
 import { useState } from "react";
 
 const navItems = [
@@ -14,7 +14,7 @@ const navItems = [
       {
         name: "System Code",
         href: "/systems/system-code",
-        icon: <GridView sx={{ fontSize: 20 }} />,
+        icon: <Widgets sx={{ fontSize: 20 }} />,
       },
       {
         name: "Properties",
@@ -24,7 +24,7 @@ const navItems = [
       {
         name: "Menus",
         href: "/systems/menus",
-        icon: <GridView sx={{ fontSize: 20 }} />,
+        icon: <Widgets sx={{ fontSize: 20 }} />,
       },
       {
         name: "API List",
