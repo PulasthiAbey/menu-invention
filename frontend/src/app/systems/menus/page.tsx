@@ -1,7 +1,6 @@
 "use client";
-import { TreeMenu } from "@/components/ui";
-import { Widgets, ExpandMore } from "@mui/icons-material";
 import { useState } from "react";
+import { Widgets, ExpandMore } from "@mui/icons-material";
 import {
   Button,
   MenuItem,
@@ -9,16 +8,66 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
+import TreeMenu from "@/components/ui/TreeMenu";
+import { ExpandedState, TreeNode } from "@/types";
+
+const sampleMenu = [
+  {
+    name: "System Management",
+    children: [
+      {
+        name: "Systems",
+        children: [
+          {
+            name: "System Code",
+            children: [{ name: "Code Registration" }],
+            showAddButton: true,
+          },
+          { name: "Code Registration - 2" },
+          { name: "Properties" },
+          { name: "Menus", children: [{ name: "Menu Registration" }] },
+          {
+            name: "API List",
+            children: [{ name: "API Registration" }, { name: "API Edit" }],
+          },
+        ],
+      },
+      {
+        name: "Users & Groups",
+        children: [
+          { name: "Users", children: [{ name: "User Account Registration" }] },
+          { name: "Groups", children: [{ name: "User Group Registration" }] },
+        ],
+      },
+      { name: "사용자승인", children: [{ name: "사용자승인 상세" }] },
+    ],
+  },
+];
 
 export default function Menus() {
   const [selectedMenu, setSelectedMenu] = useState("system-management");
+  const [expanded, setExpanded] = useState<ExpandedState>({});
+
+  const expandAllNodes = (nodes: TreeNode[]): { [key: string]: boolean } => {
+    let newExpanded: { [key: string]: boolean } = {};
+
+    const traverse = (items: TreeNode[]) => {
+      items.forEach((item) => {
+        newExpanded[item.name] = true;
+        if (item.children) traverse(item.children);
+      });
+    };
+
+    traverse(nodes);
+    return newExpanded;
+  };
 
   const handleExpandAll = () => {
-    console.log("Expand all clicked");
+    setExpanded(expandAllNodes(sampleMenu));
   };
 
   const handleCollapseAll = () => {
-    console.log("Collapse all clicked");
+    setExpanded({});
   };
 
   return (
@@ -54,14 +103,14 @@ export default function Menus() {
           <div className="flex space-x-4 px-4">
             <Button
               variant="contained"
-              className="bg-blue_gray_800 hover:bg-white hover:text-black text-white rounded-3xl min-w-[140px] py-2"
+              className="bg-blue_gray_800 text-white rounded-3xl hover:bg-white hover:text-black"
               onClick={handleExpandAll}
             >
               Expand All
             </Button>
             <Button
               variant="outlined"
-              className="hover:bg-blue_gray_800 hover:text-white text-black rounded-3xl border border-blue_gray_800 min-w-[140px] py-2"
+              className="border border-blue_gray_800 rounded-3xl text-blue_gray_900 hover:bg-blue_gray_800 hover:text-white"
               onClick={handleCollapseAll}
             >
               Collapse All
@@ -69,11 +118,12 @@ export default function Menus() {
           </div>
 
           <div className="mt-5">
-            <TreeMenu />
+            <TreeMenu
+              nodes={sampleMenu}
+              expanded={expanded}
+              setExpanded={setExpanded}
+            />
           </div>
-        </div>
-        <div>
-          <></>
         </div>
       </div>
     </div>

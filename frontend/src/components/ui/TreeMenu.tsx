@@ -1,105 +1,57 @@
-import { useState } from "react";
-import { ExpandMore, ExpandLess, AddCircle } from "@mui/icons-material";
+import { ExpandedState, TreeNode } from "@/types";
+import { ExpandMore, AddCircle } from "@mui/icons-material";
 
-interface TreeNode {
-  name: string;
-  children?: TreeNode[];
-  showAddButton?: boolean; // Option to show "+" button
+interface TreeMenuProps {
+  nodes: TreeNode[];
+  expanded: { [key: string]: boolean };
+  setExpanded: (value: { [key: string]: boolean }) => void;
 }
 
-const sampleMenu: TreeNode[] = [
-  {
-    name: "System Management",
-    children: [
-      {
-        name: "Systems",
-        children: [
-          {
-            name: "System Code",
-            children: [{ name: "Code Registration" }],
-            showAddButton: true,
-          },
-          { name: "Code Registration - 2" },
-          { name: "Properties" },
-          {
-            name: "Menus",
-            children: [{ name: "Menu Registration" }],
-          },
-          {
-            name: "API List",
-            children: [
-              { name: "API Registration" },
-              { name: "API Edit" },
-            ],
-          },
-        ],
-      },
-      {
-        name: "Users & Groups",
-        children: [
-          {
-            name: "Users",
-            children: [{ name: "User Account Registration" }],
-          },
-          {
-            name: "Groups",
-            children: [{ name: "User Group Registration" }],
-          },
-        ],
-      },
-      {
-        name: "사용자승인",
-        children: [{ name: "사용자승인 상세" }],
-      },
-    ],
-  },
-];
-
-export default function TreeMenu() {
-  const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({});
-
+export default function TreeMenu({
+  nodes,
+  expanded,
+  setExpanded,
+}: TreeMenuProps) {
   const toggleExpand = (name: string) => {
-    setExpanded((prev) => ({ ...prev, [name]: !prev[name] }));
+    setExpanded((prev) => {
+      const newState: ExpandedState = { ...prev, [name]: !prev[name] };
+      return newState;
+    });
   };
 
   const renderTree = (nodes: TreeNode[], level = 0) =>
     nodes.map((node) => (
-      <div key={node.name} className={`pl-${level * 4} flex flex-col`}>
-        {/* Row for Icon + Text */}
+      <div key={node.name} className="relative pl-6">
         <div className="flex items-center space-x-2">
-          {/* Expand/Collapse Button Placeholder (Fixes Alignment) */}
-          <span className="w-4 flex justify-center">
-            {node.children ? (
-              <span
-                className="cursor-pointer"
-                onClick={() => toggleExpand(node.name)}
-              >
-                {expanded[node.name] ? (
-                  <ExpandLess fontSize="small" />
-                ) : (
-                  <ExpandMore fontSize="small" />
-                )}
-              </span>
-            ) : null}
-          </span>
+          {node.children ? (
+            <span
+              className="cursor-pointer"
+              onClick={() => toggleExpand(node.name)}
+            >
+              <ExpandMore
+                fontSize="small"
+                className={expanded[node.name] ? "rotate-180" : ""}
+              />
+            </span>
+          ) : (
+            <span className="inline-block w-3" />
+          )}
 
-          {/* Node Name */}
           <span>{node.name}</span>
 
-          {/* Add Button (Optional) */}
           {node.showAddButton && (
-            <span className="text-blue-600 cursor-pointer">
-              <AddCircle fontSize="small" />
-            </span>
+            <AddCircle
+              fontSize="small"
+              className="text-blue-600 cursor-pointer"
+            />
           )}
         </div>
 
-        {/* Nested Children (Always inside the same section) */}
         {expanded[node.name] && node.children && (
-          <div className="pl-6">{renderTree(node.children, level + 1)}</div>
+          <div className="pl-4">{renderTree(node.children, level + 1)}</div>
         )}
       </div>
     ));
 
-  return <div className="p-4">{renderTree(sampleMenu)}</div>;
+  return <div className="p-4">{renderTree(nodes)}</div>;
 }
